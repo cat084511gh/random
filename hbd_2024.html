@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
+    #moving-title {
+      position: absolute;
+      font-size: 80px;
+      font-weight: bold;
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+      font-family: "Times New Roman";
+    }
+  </style>
+</head>
+<body>
+  <div id="moving-title">Happy Birthday!</div>
+  <script>
+    const title = document.getElementById('moving-title');
+    let x = Math.random() * window.innerWidth, y = Math.random() * window.innerHeight;
+    let speed = 3;
+    let speedX = speed * Math.cos(Math.PI / 4);
+    let speedY = speed * Math.sin(Math.PI / 4);
+    const getRandomColor = () => `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+    function moveTitle() {
+      x += speedX;
+			y += speedY;
+      if (x <= 0 || x + title.offsetWidth >= window.innerWidth) {
+				speedX *= -1;
+				title.style.color = getRandomColor();
+			}
+      if (y <= 0 || y + title.offsetHeight >= window.innerHeight) {
+				speedY *= -1;
+				title.style.color = getRandomColor();
+			}
+      title.style.left = `${x}px`;
+			title.style.top = `${y}px`;
+      requestAnimationFrame(moveTitle);
+    }
+
+    moveTitle();
+  </script>
+</body>
+</html>
